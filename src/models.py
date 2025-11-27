@@ -275,7 +275,9 @@ def predict_final_from_q3(
     if league_model:
         league_pred_margin = league_model.predict(np.array([[q3_margin]]))[0]
         result['league_predicted_margin'] = league_pred_margin
-        result['league_predicted_team_final'] = team_q3 + (league_pred_margin - q3_margin) / 2 + (q3_margin / 2)
+        # Calculate margin change from Q3 to final
+        margin_change = league_pred_margin - q3_margin
+        result['league_margin_change'] = margin_change
         result['league_win_probability'] = "favorable" if league_pred_margin > 0 else "unfavorable"
     
     if team_model:
